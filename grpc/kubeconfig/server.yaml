@@ -1,0 +1,33 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: server-deployment
+  labels:
+    app: server
+spec:
+  selector:
+    matchLabels:
+      app: server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server-grpc
+        image: grpc_server1:v1
+        ports:
+        - name: hello-service
+          containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-service
+spec:
+  selector:
+    app: server
+  ports:
+  - port: 3000
+    targetPort: hello-service
