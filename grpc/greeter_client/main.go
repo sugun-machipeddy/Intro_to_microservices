@@ -34,6 +34,9 @@ const (
 )
 
 func main() {
+
+	test := 1
+	for test == 1 {
 	// Set up a connection to the server.
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
@@ -54,4 +57,7 @@ func main() {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.Message)
+
+	time.Sleep(300 * time.Millisecond)
+	}
 }
