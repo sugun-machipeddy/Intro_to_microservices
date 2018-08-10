@@ -49,15 +49,34 @@ func main() {
 	if len(os.Args) > 1 {
 		name = os.Args[1]
 	}
+
+	var itr_latency [50]time.Duration
+  var Avg_latency time.Duration
+
+  for i := 0; i < 50; i++ {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+
 	start := time.Now()
 	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
+	t := time.Now()
+	log.Printf("%d", i)
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.Message)
-	t := time.Now()
-  elapsed := t.Sub(start)
-  log.Printf("Duration: %s", elapsed)
+	log.Printf("execution time: %s", r.Message)
+	//log.Printf("%T", r.Message)
+	execution_time, _ := time.ParseDuration(r.Message)
+
+  response_time := t.Sub(start)
+  log.Printf("response time: %s", response_time)
+
+	latency := response_time - execution_time
+	log.Printf("latency: %s", latency)
+	Avg_latency = Avg_latency + latency
+  itr_latency[i] = latency
+	}
+
+	Avg_latency = Avg_latency/50
+  log.Printf("Avg latency %s", Avg_latency)
 }

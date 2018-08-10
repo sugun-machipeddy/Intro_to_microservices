@@ -23,7 +23,7 @@ package main
 import (
 	"log"
 	"net"
-
+	"time"
 	context "golang.org/x/net/context"
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
@@ -39,7 +39,12 @@ type server struct{}
 
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
+	start := time.Now()
+	time.Sleep(50 * time.Millisecond)
+	t := time.Now()
+	execution_time := t.Sub(start).String()
+
+	return &pb.HelloReply{Message: execution_time}, nil
 }
 
 func main() {
