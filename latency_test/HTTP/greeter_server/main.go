@@ -9,7 +9,7 @@ func main(){
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		start:=time.Now()
 		w.Header().Set("Content-Type", "text/plain")
-		fmt.Fprintf(w, "Hello World",)
+		time.Sleep(50 * time.Millisecond)
 		t:= time.Now()
 		execution_time:= t.Sub(start)
 		fmt.Fprintf(w, "execution time:%s", execution_time)
