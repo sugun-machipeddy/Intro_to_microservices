@@ -19,6 +19,6 @@ func main(){
 		fmt.Fprintf(w, "execution time:%s", execution_time)
 	})
 
-	log.Fatal(s.ListenAndServeTLS("server.crt", "server.key"))
+	log.Fatal(s.ListenAndServeTLS("server_http2.crt", "server.key"))
 
 }

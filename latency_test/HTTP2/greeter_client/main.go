@@ -7,7 +7,7 @@ func main(){
   hc := &http.Client{
 		Transport: &http2.Transport{
 			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
+				InsecureSkipVerify: false,
 			},
 		},
 	}
