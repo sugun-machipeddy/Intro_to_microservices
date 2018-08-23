@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package filetransfer;
+
+service transfer {
+  rpc Upload (HelloRequest) returns (stream Chunk) {}
+}
+
+
+message Chunk {
+  bytes content = 1;
+  string execution_time = 2;
+}
+
+message HelloRequest {
+  string message = 1;
+}

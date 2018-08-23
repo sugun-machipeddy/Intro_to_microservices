@@ -19,7 +19,7 @@ func main(){
 		n, _ := strconv.Atoi(a)
 
 		const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		b := make([]byte, (n*40000))
+		b := make([]byte, (n*80000))
 	  for i := range b {
 	      b[i] = letterBytes[rand.Intn(len(letterBytes))]
 	  }

@@ -1,43 +1,58 @@
 package main
 
 import (
-	//"bytes"
-	"unsafe"
+	"bytes"
+	//"unsafe"
+	//"fmt"
+	"os"
 	"fmt"
+	"bufio"
+	"image"
+	"image/png"
+
 
 )
 
 
 func ExampleBuffer_Grow() {
-	//var b bytes.Buffer
-	//b.Grow(10)
-	//b.Write([]byte("Hello World"))
-	//fmt.Printf("length:%d ", b.Len())
-	//fmt.Printf("length:%d ", b.Cap())
-	//fmt.Printf("length:%d ", unsafe.Sizeof(b))
-	//s := ""
-	//var c bytes.Buffer
-	//c.Write([]byte("1.823597ms"))
-	//fmt.Printf("length:%d ", c.Len())
-	//fmt.Printf("length:%d ", c.Cap())
-	//fmt.Printf("length:%d ", unsafe.Sizeof(s))
-	//fmt.Printf("length:%d ", unsafe.Sizeof(c))
+	//image to bytes
 
-	//b.Grow(64)
-	//bb := b.Bytes()
-	//b.Write([]byte("64 bytes or fewer"))
-	//fmt.Printf("%q", bb[:b.Len()])
-	// Output: "64 bytes or fewer"
-	var i int
-	var u uint
-	var up uintptr
-	var s string
+	image1 := "Plot3.png"
+	file, err := os.Open(image1)
 
+  	if err != nil {
+          fmt.Println(err)
+          os.Exit(1)
+  	}
+	
+	defer file.Close()
 
-fmt.Printf("i Type:%T Size:%d\n", i, unsafe.Sizeof(i))
-fmt.Printf("u Type:%T Size:%d\n", u, unsafe.Sizeof(u))
-fmt.Printf("up Type:%T Size:%d\n", up, unsafe.Sizeof(up))
-fmt.Printf("up Type:%T Size:%d\n", s, unsafe.Sizeof(s))
+	fileInfo, _ := file.Stat()
+  	var size int64 = fileInfo.Size()
+  	bytes1 := make([]byte, size)
+
+	buffer := bufio.NewReader(file)
+  	_, err = buffer.Read(bytes1)
+	
+	
+	//fmt.Printf("%d", bytes)
+
+	//bytes to image
+	img, _, _ := image.Decode(bytes.NewReader(bytes1))
+	
+   	out, err := os.Create("./QRImg.png")
+
+   	if err != nil {
+             fmt.Println(err)
+             os.Exit(1)
+   	}
+
+   	err = png.Encode(out, img)
+
+   	if err != nil {
+            fmt.Println(err)
+            os.Exit(1)
+   	}
 }
 
 
